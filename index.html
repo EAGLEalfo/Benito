@@ -1,0 +1,1021 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BENITO — La Scala del Potere</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=IM+Fell+English:ital@0;1&display=swap');
+
+:root {
+  --bg: #11100f;
+  --panel: #1b1917;
+  --paper: #d9c9a8;
+  --ink: #29251e;
+  --gold: #c6a568;
+  --red: #813b35;
+  --muted: #a69b86;
+  --line: #514638;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 50% -10%, #443526 0%, transparent 55%),
+    var(--bg);
+  color: #e8dcc5;
+  font-family: Georgia, serif;
+}
+button { font: inherit; }
+button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+.top {
+  text-align: center;
+  padding: 24px 15px 18px;
+  border-bottom: 1px solid var(--line);
+  background: #151311d9;
+}
+.kicker {
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+h1 {
+  font-family: Cinzel, Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(25px, 5vw, 43px);
+  letter-spacing: 4px;
+  margin: 9px 0 4px;
+}
+.subtitle {
+  font-family: "IM Fell English", Georgia, serif;
+  font-style: italic;
+  color: var(--muted);
+}
+.layout {
+  max-width: 1200px;
+  margin: auto;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 225px minmax(0, 1fr) 225px;
+  gap: 18px;
+  align-items: start;
+}
+.panel {
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg, #201d19, #171513);
+  box-shadow: 0 12px 35px #0004;
+}
+.side-title {
+  padding: 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--gold);
+  font-family: Cinzel, Georgia, serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.side-content { padding: 15px; }
+.portrait {
+  width: 100%;
+  height: 150px;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(0deg, #191613dd, #19161344),
+    repeating-linear-gradient(135deg, #30271e 0px, #30271e 2px, #211c17 2px, #211c17 5px);
+  border-bottom: 1px solid var(--line);
+  color: var(--gold);
+  font-family: Cinzel, Georgia, serif;
+  font-size: 52px;
+}
+.identity { font-family: Cinzel, Georgia, serif; font-size: 18px; }
+.role { color: var(--muted); font-size: 12px; margin-top: 5px; }
+.stat { margin-top: 17px; }
+.stat-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+}
+.stat-head span:first-child { color: #c7bba5; }
+.stat-head span:last-child { color: var(--gold); }
+.bar {
+  height: 5px;
+  background: #393128;
+  margin-top: 7px;
+  overflow: hidden;
+}
+.bar div {
+  height: 100%;
+  width: 0;
+  transition: width .3s;
+  background: var(--gold);
+}
+.bar.red div { background: #9b554b; }
+.bar.green div { background: #78916a; }
+.center { min-width: 0; }
+.chapter {
+  text-align: center;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 10px;
+  padding: 18px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.scene {
+  padding: clamp(20px, 4vw, 38px);
+}
+.scene h2 {
+  font-family: Cinzel, Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(23px, 3vw, 32px);
+  line-height: 1.35;
+  margin: 0 0 8px;
+}
+.location {
+  color: var(--gold);
+  font-size: 12px;
+  font-style: italic;
+  margin-bottom: 23px;
+}
+.art {
+  height: 165px;
+  margin-bottom: 24px;
+  border: 1px solid #63503b;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(0deg, #11100f 0%, #17151355 60%, #11100f99 100%),
+    radial-gradient(ellipse at 50% 70%, #8a6341 0%, #3b3025 35%, #191715 75%);
+}
+.art::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 150px;
+  bottom: -35px;
+  background: #151311;
+  border-radius: 48% 48% 0 0;
+  box-shadow: -70px 35px 0 -25px #191613, 70px 35px 0 -25px #191613;
+}
+.art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent 0px, #00000009 1px, transparent 3px);
+  pointer-events: none;
+}
+.art-symbol {
+  z-index: 1;
+  color: #d6b77a;
+  font-family: Cinzel, Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 5px;
+  text-align: center;
+  text-shadow: 0 2px 10px #000;
+  margin-top: 65px;
+}
+.prose {
+  font-family: "IM Fell English", Georgia, serif;
+  font-size: 18px;
+  line-height: 1.9;
+  color: #dfd3be;
+  white-space: pre-line;
+}
+.prose p { margin: 0 0 17px; }
+.quote {
+  border-left: 2px solid var(--red);
+  padding: 9px 0 9px 17px;
+  margin: 23px 0;
+  font-style: italic;
+  color: #c8b18c;
+  line-height: 1.7;
+}
+.choices {
+  margin-top: 30px;
+  display: grid;
+  gap: 10px;
+}
+.choice {
+  width: 100%;
+  text-align: left;
+  padding: 17px;
+  cursor: pointer;
+  color: #e8dcc5;
+  background: #201d19;
+  border: 1px solid #514638;
+  transition: background .2s, border .2s, transform .2s;
+}
+.choice:hover:not(:disabled) {
+  background: #30271f;
+  border-color: var(--gold);
+  transform: translateX(3px);
+}
+.choice:disabled { opacity: .4; cursor: not-allowed; }
+.choice strong {
+  display: block;
+  font-size: 15px;
+  font-weight: normal;
+  margin-bottom: 6px;
+}
+.choice small {
+  display: block;
+  color: #a99b84;
+  line-height: 1.6;
+  font-size: 12px;
+}
+.choice .number {
+  display: inline-block;
+  margin-right: 9px;
+  color: var(--gold);
+  font-family: Cinzel, Georgia, serif;
+}
+.notice {
+  color: #c7ad7c;
+  background: #34291e;
+  border: 1px solid #57432b;
+  padding: 12px;
+  font-size: 12px;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+.mini-title {
+  color: var(--gold);
+  font-family: Cinzel, Georgia, serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+.inventory-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #383128;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.inventory-item:last-child { border-bottom: 0; }
+.inventory-item span { color: var(--muted); }
+.resource {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 0;
+  border-bottom: 1px solid #383128;
+  font-size: 12px;
+}
+.resource strong { color: var(--gold); }
+.log {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #b7aa94;
+  padding: 0 0 0 14px;
+}
+.log li { margin-bottom: 10px; }
+.system-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  background: transparent;
+  color: #b9a98d;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  font-size: 12px;
+}
+.system-btn:hover { border-color: var(--gold); color: #f0dfbd; }
+.bottom {
+  text-align: center;
+  color: #756b5a;
+  font-size: 11px;
+  padding: 0 15px 28px;
+}
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 90%;
+  background: #ded0b1;
+  color: #242018;
+  border: 1px solid var(--gold);
+  padding: 12px 18px;
+  font-size: 13px;
+  box-shadow: 0 5px 25px #0008;
+  z-index: 5;
+}
+.hidden { display: none; }
+@media(max-width: 900px) {
+  .layout { grid-template-columns: 190px minmax(0,1fr); padding: 14px; gap: 12px; }
+  .right { grid-column: 1 / -1; }
+  .right-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+}
+@media(max-width: 600px) {
+  .layout { display: flex; flex-direction: column; padding: 10px; }
+  .left, .center, .right { width: 100%; }
+  .left { display: grid; grid-template-columns: 110px 1fr; }
+  .left .portrait { height: 100%; min-height: 140px; }
+  .left .profile-body { padding: 12px; }
+  .left .stat { margin-top: 10px; }
+  .right-grid { display: grid; grid-template-columns: 1fr; }
+  .prose { font-size: 17px; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="kicker">Un racconto di storia alternativa</div>
+  <h1>BENITO</h1>
+  <div class="subtitle">La Scala del Potere</div>
+</header>
+
+<main class="layout">
+  <aside class="panel left">
+    <div class="portrait" id="portrait">B.</div>
+    <div class="profile-body">
+      <div class="mini-title">Il protagonista</div>
+      <div class="identity" id="name">Benito</div>
+      <div class="role" id="role">Prigioniero · Nessun titolo</div>
+
+      <div class="stat">
+        <div class="stat-head"><span>Salute</span><span id="healthN">70</span></div>
+        <div class="bar green"><div id="healthB"></div></div>
+      </div>
+      <div class="stat">
+        <div class="stat-head"><span>Astuzia</span><span id="witN">10</span></div>
+        <div class="bar"><div id="witB"></div></div>
+      </div>
+      <div class="stat">
+        <div class="stat-head"><span>Reputazione</span><span id="repN">0</span></div>
+        <div class="bar"><div id="repB"></div></div>
+      </div>
+      <div class="stat">
+        <div class="stat-head"><span>Sospetto</span><span id="susN">0</span></div>
+        <div class="bar red"><div id="susB"></div></div>
+      </div>
+    </div>
+  </aside>
+
+  <section class="panel center">
+    <div class="chapter" id="chapter">Capitolo I · Nessuno</div>
+    <article class="scene">
+      <div class="art"><div class="art-symbol" id="artLabel">ITALIA · 1930</div></div>
+      <h2 id="sceneTitle">La stanza senza finestre</h2>
+      <div class="location" id="location">Una tenuta isolata, nell'Italia alternativa degli anni Trenta</div>
+      <div class="prose" id="story"></div>
+      <div class="quote hidden" id="quote"></div>
+      <div class="notice" id="hint">Le tue decisioni cambieranno il destino di Benito.</div>
+      <div class="choices" id="choices"></div>
+    </article>
+  </section>
+
+  <aside class="right">
+    <div class="right-grid">
+      <div class="panel">
+        <div class="side-title">Le tue risorse</div>
+        <div class="side-content">
+          <div class="resource"><span>Denaro</span><strong id="money">0 lire</strong></div>
+          <div class="resource"><span>Informazioni</span><strong id="info">0</strong></div>
+          <div class="resource"><span>Alleati</span><strong id="allies">0</strong></div>
+          <div class="resource"><span>Influenza</span><strong id="influence">0</strong></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="side-title">Inventario</div>
+        <div class="side-content" id="inventory">
+          <div class="inventory-item">Nessun oggetto speciale.<br><span>Per ora possiedi soltanto ciò che indossi.</span></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="side-title">Cronache personali</div>
+        <div class="side-content">
+          <ul class="log" id="log"><li>La tua storia comincia.</li></ul>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="side-title">Archivio</div>
+        <div class="side-content">
+          <button class="system-btn" id="saveBtn">Salva partita</button>
+          <button class="system-btn" id="loadBtn">Carica partita</button>
+          <button class="system-btn" id="restartBtn">Nuova storia</button>
+          <input type="file" id="saveFile" accept=".json" hidden>
+          <div class="role" id="saveStatus" style="margin-top:10px">Salvataggio automatico attivo.</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<footer class="bottom">
+  Un mondo immaginario ispirato alle tensioni sociali e politiche dell'Italia degli anni Trenta.
+</footer>
+
+<div class="toast hidden" id="toast" role="status"></div>
+
+<script>
+const KEY = "benito-scala-potere-v1";
+
+const fresh = () => ({
+  scene: "cell",
+  health: 70, wit: 10, rep: 0, suspicion: 0,
+  money: 0, info: 0, allies: 0, influence: 0,
+  freedom: false,
+  flags: {},
+  items: [],
+  log: ["Benito apre gli occhi in una stanza senza finestre."],
+  endings: []
+});
+
+let s = fresh();
+
+const scenes = {
+  cell: {
+    chapter: "Capitolo I · Nessuno",
+    title: "La stanza senza finestre",
+    location: "Una tenuta isolata, nell'Italia alternativa degli anni Trenta",
+    art: "IL PREZZO DEL SILENZIO",
+    text: [
+      "Benito non ricorda più con precisione il giorno in cui ha perso la libertà. Ricorda invece i rumori: le serrature, i passi nel corridoio, il vento che attraversa le fessure della porta.",
+      "È prigioniero di un potente proprietario terriero, in un Paese dove il denaro compra la legge e i rapporti personali valgono più dei documenti. Non ha una famiglia influente, né una posizione da cui partire.",
+      "Questa mattina la porta rimane aperta qualche secondo più del solito. Una guardia discute con un amministratore. Sul tavolo, appena oltre la soglia, giace un registro."
+    ],
+    quote: "«In questo mondo, chi conosce i nomi giusti può valere più di chi possiede le terre.»",
+    hint: "Benito deve decidere come sfruttare la prima occasione.",
+    choices: [
+      { title: "Studiare il registro di nascosto", desc: "Cerca informazioni sulle persone che comandano la tenuta.", effects: "Astuzia +3 · Informazioni +1 · Sospetto +5", next: "ledger",
+        apply() { s.wit += 3; s.info++; s.suspicion += 5; } },
+      { title: "Parlare con la guardia più giovane", desc: "Prova a capire chi potrebbe essere disposto ad ascoltarti.", effects: "Possibile alleato · Sospetto +2", next: "guard",
+        apply() { s.suspicion += 2; s.flags.guardApproached = true; } },
+      { title: "Lavorare senza attirare l'attenzione", desc: "Risparmia le forze e osserva le abitudini della tenuta.", effects: "Salute +10 · Astuzia +1", next: "work",
+        apply() { s.health += 10; s.wit += 1; } }
+    ]
+  },
+  ledger: {
+    chapter: "Capitolo I · Le prime crepe",
+    title: "I nomi nel registro",
+    location: "L'ufficio dell'amministratore",
+    art: "INFORMAZIONI E SEGRETI",
+    text: [
+      "Il registro contiene pagamenti, debiti e nomi di funzionari locali. Molti uomini rispettabili dipendono in realtà dalla generosità del proprietario.",
+      "Benito memorizza un nome: Carlo Verri, un impiegato che sembra gestire più denaro di quanto il suo stipendio possa giustificare.",
+      "La scoperta potrebbe diventare una risorsa. Ma le informazioni sono pericolose soltanto quando qualcuno scopre che le possiedi."
+    ],
+    quote: "«Un segreto non è potere. È la possibilità di ottenere qualcosa in cambio.»",
+    hint: "Hai ottenuto informazioni che potranno tornare utili.",
+    choices: [
+      { title: "Memorizzare i nomi e rimettere tutto a posto", desc: "Conserva il vantaggio senza lasciare prove.", effects: "Astuzia +2 · Sospetto −2", next: "afterCell",
+        apply() { s.wit += 2; s.suspicion -= 2; s.flags.ledgerSafe = true; } },
+      { title: "Sottrarre una pagina", desc: "Un documento concreto potrebbe valere più di un ricordo.", effects: "Ottieni un documento · Sospetto +12", next: "caught",
+        apply() { s.items.push("Pagina del registro"); s.suspicion += 12; } }
+    ]
+  },
+  guard: {
+    chapter: "Capitolo I · Le prime crepe",
+    title: "Un uomo stanco",
+    location: "Il corridoio di servizio",
+    art: "FIDUCIA E PAURA",
+    text: [
+      "La guardia si chiama Marco. È giovane, stanco e poco convinto del proprio lavoro. Non vuole mettersi apertamente contro il padrone, ma sembra conoscere le ingiustizie della tenuta.",
+      "Benito capisce che la paura non rende tutti uguali: qualcuno obbedisce per interesse, qualcuno per necessità, qualcuno perché non vede alternative.",
+      "Marco ascolta senza promettere nulla. Prima di andarsene, però, lascia la porta socchiusa."
+    ],
+    quote: "«Non posso liberarti oggi. Ma forse posso smettere di renderti tutto più difficile.»",
+    hint: "Un rapporto può essere più prezioso di una somma di denaro.",
+    choices: [
+      { title: "Ringraziarlo senza chiedere favori", desc: "Costruisci fiducia con pazienza.", effects: "Alleati +1 · Reputazione +3", next: "afterCell",
+        apply() { s.allies++; s.rep += 3; s.flags.marco = true; } },
+      { title: "Chiedergli aiuto per fuggire", desc: "Rischia tutto per un'occasione immediata.", effects: "Esito incerto · Sospetto +8", next: "escapeAttempt",
+        apply() { s.suspicion += 8; s.flags.marco = true; } }
+    ]
+  },
+  work: {
+    chapter: "Capitolo I · Le prime crepe",
+    title: "Il lavoro e il silenzio",
+    location: "I campi della tenuta",
+    art: "IL PESO DELLA GIORNATA",
+    text: [
+      "La giornata trascorre tra fatica e ordini. Benito osserva chi impartisce gli ordini, chi li esegue e chi riesce a sottrarsi al lavoro.",
+      "Un vecchio lavoratore gli spiega che la tenuta è indebitata e che presto arriverà un funzionario a controllare i conti.",
+      "Per la prima volta Benito vede una possibilità che non dipende dalla forza: conoscere il momento in cui gli altri avranno bisogno di lui."
+    ],
+    quote: "«Chi non può comandare oggi, può imparare come funziona il comando.»",
+    hint: "Hai imparato a osservare i rapporti di potere.",
+    choices: [
+      { title: "Chiedere del funzionario", desc: "Cerca di capire cosa verrà controllato.", effects: "Informazioni +1 · Astuzia +2", next: "afterCell",
+        apply() { s.info++; s.wit += 2; } },
+      { title: "Aiutare gli altri lavoratori", desc: "Costruisci una reputazione tra chi condivide la tua condizione.", effects: "Reputazione +5 · Alleati +1", next: "afterCell",
+        apply() { s.rep += 5; s.allies++; } }
+    ]
+  },
+  afterCell: {
+    chapter: "Capitolo II · Una possibilità",
+    title: "La visita del funzionario",
+    location: "Il cortile principale",
+    art: "UNA PORTA APERTA",
+    text: [
+      "Un'automobile nera attraversa il cancello. Ne scende un funzionario del distretto, accompagnato da un segretario. Il proprietario lo riceve con una cortesia insolita.",
+      "Benito viene incaricato di portare alcuni documenti nell'ufficio. Per pochi minuti si trova in mezzo a uomini che parlano di contratti, debiti e favori politici.",
+      "Può sfruttare la confusione per ottenere un documento, attirare l'attenzione del funzionario oppure tentare una fuga."
+    ],
+    quote: "«La fortuna apre una porta. La decisione stabilisce se attraversarla.»",
+    hint: "Le tue scelte precedenti possono modificare le opportunità.",
+    choices: [
+      { title: "Consegnare un'informazione al funzionario", desc: "Offri un dettaglio utile sui conti della tenuta.", effects: "Reputazione +6 · Informazioni +1", next: "official",
+        require() { return s.info > 0 || s.flags.ledgerSafe || s.flags.marco; },
+        locked: "Serve almeno un'informazione o un contatto.",
+        apply() { s.rep += 6; s.info++; s.flags.officialContact = true; } },
+      { title: "Chiedere di essere trasferito in città", desc: "Punta a una possibilità legale, per quanto incerta.", effects: "Possibile libertà · Dipende dalla tua reputazione", next: "transfer",
+        apply() {} },
+      { title: "Tentare la fuga durante il caos", desc: "Una scelta rischiosa che potrebbe cambiare tutto.", effects: "Rischio elevato", next: "escapeAttempt",
+        apply() {} }
+    ]
+  },
+  caught: {
+    chapter: "Capitolo II · Il prezzo dei segreti",
+    title: "La pagina mancante",
+    location: "L'ufficio dell'amministratore",
+    art: "IL SOSPETTO",
+    text: [
+      "L'amministratore nota subito che il registro è stato manomesso. La tenuta viene perquisita e Benito è chiamato a rispondere.",
+      "La pagina sottratta contiene informazioni compromettenti, ma possederla non basta: deve riuscire a evitare che venga trovata.",
+      "Il tempo è poco. Può nascondere il documento o confessare di averlo preso, cercando di trasformare il gesto in un'accusa contro il sistema."
+    ],
+    choices: [
+      { title: "Nascondere il documento", desc: "Prova a conservare il vantaggio.", effects: "Astuzia +2 · Sospetto +5", next: "afterCell",
+        apply() { s.wit += 2; s.suspicion += 5; } },
+      { title: "Raccontare ciò che sai", desc: "Trasforma il rischio in una denuncia delle irregolarità.", effects: "Reputazione +5 · Sospetto −4", next: "official",
+        apply() { s.rep += 5; s.suspicion -= 4; s.flags.officialContact = true; } }
+    ]
+  },
+  escapeAttempt: {
+    chapter: "Capitolo II · Il prezzo della libertà",
+    title: "Oltre il cancello",
+    location: "La strada provinciale",
+    art: "IL MONDO OLTRE LA TENUTA",
+    text: [
+      "Benito si muove quando le guardie sono distratte. Il cancello è a pochi passi e, oltre il muro, la strada conduce verso la città.",
+      "Il tentativo non è privo di conseguenze. Un uomo lo riconosce, ma non è chiaro se abbia intenzione di denunciarlo.",
+      "Benito deve decidere se continuare verso la città o cercare un riparo presso qualcuno che possa aiutarlo."
+    ],
+    choices: [
+      { title: "Correre verso la città", desc: "Affidati alla velocità e alla fortuna.", effects: "Esito legato alla salute e all'astuzia", next: "city",
+        apply() {
+          if (s.health >= 55 && s.wit >= 12) {
+            s.freedom = true; s.money += 15; s.rep += 4;
+            s.flags.successfulEscape = true;
+          } else {
+            s.health -= 15; s.suspicion += 10;
+            s.flags.failedEscape = true;
+          }
+        } },
+      { title: "Cercare Marco", desc: "Se ti fidi di lui, potrebbe offrirti un rifugio.", effects: "Richiede un contatto", next: "city",
+        require() { return !!s.flags.marco; },
+        locked: "Non hai ancora un rapporto con Marco.",
+        apply() {
+          s.freedom = true; s.allies++; s.money += 10;
+          s.flags.successfulEscape = true;
+        } }
+    ]
+  },
+  official: {
+    chapter: "Capitolo III · La città",
+    title: "Un favore in cambio di un favore",
+    location: "L'ufficio del distretto",
+    art: "IL POTERE HA UNA PORTA",
+    text: [
+      "Il funzionario ascolta Benito con interesse prudente. Non è un uomo generoso: è un uomo che pesa i vantaggi. Le informazioni ricevute potrebbero danneggiare il proprietario, ma possono anche diventare una moneta di scambio.",
+      "Benito riceve un'occasione di lavoro in città. Non è ancora libero di fare ciò che vuole, ma non è più soltanto un nome su un registro.",
+      "Per la prima volta, la sua ascesa potrebbe cominciare attraverso le relazioni, l'abilità e la conoscenza dei meccanismi del potere."
+    ],
+    choices: [
+      { title: "Accettare un impiego amministrativo", desc: "Un percorso lento, ma con accesso a documenti e persone.", effects: "Libertà · Denaro +40 · Influenza +2", next: "city",
+        apply() { s.freedom = true; s.money += 40; s.influence += 2; s.flags.clerk = true; } },
+      { title: "Chiedere una ricompensa immediata", desc: "Punta sul valore delle informazioni.", effects: "Denaro +70 · Sospetto +5", next: "city",
+        apply() { s.freedom = true; s.money += 70; s.suspicion += 5; } }
+    ]
+  },
+  transfer: {
+    chapter: "Capitolo III · La città",
+    title: "Una lettera di trasferimento",
+    location: "La tenuta, prima della partenza",
+    art: "UNA NUOVA VITA",
+    text: [
+      "Il funzionario non promette la libertà, ma il trasferimento in città viene autorizzato. È una possibilità fragile, soggetta a condizioni e controlli.",
+      "La città offre lavori, giornali, circoli, uffici e persone che cercano di farsi strada. Le disuguaglianze non scompaiono, ma i rapporti di forza sono meno prevedibili.",
+      "Benito parte con poco denaro e nessuna garanzia. Dovrà scegliere come costruire una posizione propria."
+    ],
+    choices: [
+      { title: "Partire e cercare un lavoro", desc: "Comincia una vita indipendente.", effects: "Libertà · Denaro +25", next: "city",
+        apply() { s.freedom = true; s.money += 25; } },
+      { title: "Rimanere e raccogliere altre informazioni", desc: "Rinuncia alla partenza immediata per un possibile vantaggio.", effects: "Informazioni +2 · Sospetto +3", next: "city",
+        apply() { s.info += 2; s.suspicion += 3; s.freedom = true; } }
+    ]
+  },
+  city: {
+    chapter: "Capitolo III · La città",
+    title: "La città degli uomini ambiziosi",
+    location: "Una città industriale dell'Italia alternativa",
+    art: "DOVE NASCONO LE AMBIZIONI",
+    text: [
+      "La città è rumorosa, affollata e piena di contraddizioni. Le fabbriche cercano lavoratori, i giornali cercano notizie, i politici cercano persone utili.",
+      "Benito ha finalmente la possibilità di decidere dove andare. Potrebbe lavorare, studiare i circoli politici, guadagnare denaro o costruire una rete di alleati.",
+      "Nessuna strada garantisce il successo. Ma ogni scelta può avvicinarlo al mondo che un tempo gli era precluso."
+    ],
+    choices: [
+      { title: "Lavorare in un ufficio", desc: "Guadagna denaro e impara come funziona l'amministrazione.", effects: "Denaro +35 · Astuzia +3", next: "workCity",
+        apply() { s.money += 35; s.wit += 3; } },
+      { title: "Frequentare un circolo politico", desc: "Conosci persone influenti e ascolta le loro rivalità.", effects: "Influenza +3 · Sospetto +3", next: "politicalCircle",
+        apply() { s.influence += 3; s.suspicion += 3; } },
+      { title: "Cercare un vecchio contatto", desc: "Le relazioni personali possono aprire strade inattese.", effects: "Alleati +1 · Reputazione +2", next: "contacts",
+        apply() { s.allies++; s.rep += 2; } }
+    ]
+  },
+  workCity: {
+    chapter: "Capitolo IV · Le relazioni",
+    title: "Il potere dei registri",
+    location: "Un ufficio comunale",
+    art: "IL LAVORO INVISIBILE",
+    text: [
+      "L'ufficio è un labirinto di timbri, fascicoli e richieste. Benito scopre che molti problemi non si risolvono con grandi discorsi, ma sapendo chi può firmare un documento e chi teme una verifica.",
+      "Un collega gli propone di occuparsi di pratiche delicate. Potrebbe essere l'inizio di una carriera amministrativa oppure una trappola.",
+      "Per salire, Benito dovrà decidere quali favori accettare e quali rischi evitare."
+    ],
+    choices: [
+      { title: "Lavorare con scrupolo", desc: "Costruisci una reputazione di affidabilità.", effects: "Reputazione +7 · Stabilità personale", next: "ambition",
+        apply() { s.rep += 7; s.flags.reliable = true; } },
+      { title: "Accettare un favore poco chiaro", desc: "Guadagna accesso a persone influenti, ma aumenta il rischio.", effects: "Influenza +4 · Sospetto +8", next: "ambition",
+        apply() { s.influence += 4; s.suspicion += 8; s.flags.compromised = true; } }
+    ]
+  },
+  politicalCircle: {
+    chapter: "Capitolo IV · Le relazioni",
+    title: "Una stanza piena di promesse",
+    location: "Un circolo politico, dopo il tramonto",
+    art: "LE PAROLE E LE MASCHERE",
+    text: [
+      "Il circolo è frequentato da funzionari, giornalisti, imprenditori e uomini che parlano di ordine e rinnovamento. Dietro le dichiarazioni pubbliche, ciascuno difende interessi diversi.",
+      "Benito ascolta più di quanto parli. Capisce che le alleanze non sono eterne e che il consenso può essere costruito, ma anche perduto.",
+      "Un organizzatore gli offre un piccolo incarico. Un giornalista, invece, gli propone di collaborare a un'inchiesta."
+    ],
+    choices: [
+      { title: "Accettare l'incarico organizzativo", desc: "Entra in contatto con la macchina politica.", effects: "Influenza +5 · Alleati +1", next: "ambition",
+        apply() { s.influence += 5; s.allies++; } },
+      { title: "Aiutare il giornalista", desc: "Raccogli informazioni e metti alla prova i potenti.", effects: "Informazioni +3 · Reputazione +4", next: "ambition",
+        apply() { s.info += 3; s.rep += 4; } }
+    ]
+  },
+  contacts: {
+    chapter: "Capitolo IV · Le relazioni",
+    title: "Il prezzo di un favore",
+    location: "Una piccola trattoria",
+    art: "FIDUCIA E INTERESSE",
+    text: [
+      "Il contatto di Benito non è ricco né potente, ma conosce molte persone. Gli presenta un tipografo, un impiegato e un ex organizzatore sindacale.",
+      "Ognuno offre un pezzo diverso della città. Nessuno può garantire una scalata politica, ma insieme rappresentano una rete da cui partire.",
+      "Benito deve decidere se coltivare questi rapporti con pazienza o cercare subito un patrono più influente."
+    ],
+    choices: [
+      { title: "Costruire una rete indipendente", desc: "Sviluppa rapporti diversi tra loro.", effects: "Alleati +2 · Reputazione +3", next: "ambition",
+        apply() { s.allies += 2; s.rep += 3; } },
+      { title: "Cercare un patrono potente", desc: "Punta su una relazione verticale e rischiosa.", effects: "Influenza +5 · Sospetto +5", next: "ambition",
+        apply() { s.influence += 5; s.suspicion += 5; } }
+    ]
+  },
+  ambition: {
+    chapter: "Capitolo V · La scalata",
+    title: "Il primo gradino",
+    location: "Il quartiere degli uffici",
+    art: "NESSUN POTERE È GRATUITO",
+    text: [
+      "Benito non è più l'uomo rinchiuso nella tenuta. Ha imparato a lavorare, osservare, stringere rapporti e riconoscere le fragilità delle istituzioni.",
+      "Ora può scegliere un percorso più preciso. La politica promette influenza; il giornalismo offre accesso alle informazioni; l'amministrazione garantisce una struttura da cui avanzare.",
+      "Il potere non è ancora a portata di mano. Ma il primo gradino è stato raggiunto."
+    ],
+    choices: [
+      { title: "Entrare nell'amministrazione politica", desc: "Cerca una posizione stabile e una rete di alleati.", effects: "Influenza +4 · Denaro −10", next: "career",
+        apply() { s.money = Math.max(0, s.money - 10); s.influence += 4; s.flags.politicalCareer = true; } },
+      { title: "Costruire un giornale indipendente", desc: "Usa informazioni e reputazione per influenzare il dibattito.", effects: "Reputazione +5 · Denaro −15", next: "career",
+        apply() { s.money = Math.max(0, s.money - 15); s.rep += 5; s.flags.journalism = true; } },
+      { title: "Organizzare una rete civica", desc: "Cerca sostegno tra lavoratori e comunità locali.", effects: "Alleati +2 · Influenza +2", next: "career",
+        apply() { s.allies += 2; s.influence += 2; s.flags.civicNetwork = true; } }
+    ]
+  },
+  career: {
+    chapter: "Capitolo VI · Il mondo politico",
+    title: "La porta del palazzo",
+    location: "Un palazzo amministrativo",
+    art: "IL POTERE È UNA RETE",
+    text: [
+      "Benito arriva davanti a un edificio dove si decidono nomine, contratti e indirizzi politici. Le persone che entrano sembrano sicure di sé; quasi tutte devono qualcosa a qualcun altro.",
+      "Un intermediario gli spiega che per ottenere una posizione importante occorrono tre cose: una reputazione riconoscibile, relazioni affidabili e una capacità concreta di risolvere problemi.",
+      "Benito può cominciare a preparare una candidatura, consolidare la propria rete o cercare di scoprire quali equilibri stanno per cambiare."
+    ],
+    choices: [
+      { title: "Preparare una candidatura pubblica", desc: "Richiede reputazione e influenza.", effects: "Possibile accesso alla leadership", next: "leadership",
+        require() { return s.rep >= 12 && s.influence >= 7; },
+        locked: "Serve reputazione 12 e influenza 7." },
+      { title: "Consolidare la rete di alleati", desc: "Investi tempo nei rapporti e nella fiducia.", effects: "Alleati +2 · Reputazione +2", next: "career",
+        apply() { s.allies += 2; s.rep += 2; } },
+      { title: "Indagare sugli equilibri del governo", desc: "Cerca informazioni prima di scegliere una strada.", effects: "Informazioni +2 · Astuzia +2", next: "career",
+        apply() { s.info += 2; s.wit += 2; } }
+    ]
+  },
+  leadership: {
+    chapter: "Capitolo VII · La prova",
+    title: "Davanti al consiglio",
+    location: "La sala delle deliberazioni",
+    art: "IL FUTURO NON È SCRITTO",
+    text: [
+      "La candidatura di Benito viene discussa. I membri del consiglio non sono un blocco unico: alcuni vogliono continuità, altri riforme, altri ancora cercano soltanto un vantaggio personale.",
+      "Benito può presentarsi come mediatore, proporre una riforma delle istituzioni o costruire un accordo che gli garantisca una posizione. Ogni strada ha costi diversi.",
+      "Questa è la prima vera prova politica. Non basta voler comandare: bisogna convincere gli altri che la propria leadership convenga anche a loro."
+    ],
+    choices: [
+      { title: "Proporre una riforma istituzionale", desc: "Cerca sostegno attraverso regole più trasparenti e responsabilità pubblica.", effects: "Reputazione +5 · Stabilità personale", next: "reformEnding",
+        require() { return s.rep >= 15; },
+        locked: "Serve reputazione 15.",
+        apply() { s.rep += 5; } },
+      { title: "Costruire una coalizione", desc: "Metti insieme alleati diversi con un programma comune.", effects: "Richiede almeno 3 alleati", next: "coalitionEnding",
+        require() { return s.allies >= 3; },
+        locked: "Serve una rete di almeno 3 alleati." },
+      { title: "Cercare il potere personale a ogni costo", desc: "Punta tutto sull'ambizione, accettando il rischio di isolarti.", effects: "Richiede influenza 12 e astuzia 15", next: "ambitionEnding",
+        require() { return s.influence >= 12 && s.wit >= 15; },
+        locked: "Servono influenza 12 e astuzia 15." }
+    ]
+  },
+  reformEnding: {
+    chapter: "Finale · Una nuova direzione",
+    title: "Le regole del potere",
+    location: "La sala del consiglio, all'alba",
+    art: "UN FUTURO DA DECIDERE",
+    text: [
+      "La proposta di Benito divide il consiglio, ma trova sostegno tra coloro che temono l'instabilità e chiedono istituzioni più responsabili.",
+      "Non ottiene un potere assoluto. Ottiene qualcosa di più difficile da costruire: una posizione politica riconosciuta e la possibilità di cambiare le regole dall'interno.",
+      "La sua storia, iniziata in una stanza senza finestre, raggiunge un nuovo capitolo. Il futuro del Paese rimane aperto."
+    ],
+    choices: [
+      { title: "Continuare la storia", desc: "Torna al momento della candidatura e prosegui le tue scelte.", effects: "Mantieni le statistiche", next: "leadership" },
+      { title: "Ricominciamo", desc: "Prova un percorso completamente diverso.", effects: "Nuova partita", restart: true }
+    ]
+  },
+  coalitionEnding: {
+    chapter: "Finale · Il patto",
+    title: "Una maggioranza fragile",
+    location: "Il palazzo del consiglio",
+    art: "IL PESO DELLE ALLEANZE",
+    text: [
+      "Benito riesce a riunire attorno a un programma persone che fino a poco tempo prima non avrebbero condiviso la stessa stanza.",
+      "Il successo non elimina le rivalità. Ogni alleato si aspetta che le promesse vengano rispettate e ogni decisione può mettere in pericolo l'equilibrio raggiunto.",
+      "Benito ha ottenuto una posizione di leadership. Ora deve dimostrare che la capacità di salire al potere è accompagnata dalla capacità di governare."
+    ],
+    choices: [
+      { title: "Continuare la storia", desc: "Torna alla prova politica.", effects: "Mantieni le statistiche", next: "leadership" },
+      { title: "Ricominciamo", desc: "Prova un percorso completamente diverso.", effects: "Nuova partita", restart: true }
+    ]
+  },
+  ambitionEnding: {
+    chapter: "Finale · L'ambizione",
+    title: "L'uomo al centro della stanza",
+    location: "Il palazzo del consiglio",
+    art: "IL PREZZO DEL COMANDO",
+    text: [
+      "Benito sfrutta le rivalità e la propria abilità politica per ottenere il controllo della situazione. Per un momento sembra che tutti aspettino soltanto la sua decisione.",
+      "Ma una leadership costruita attorno a una sola persona è fragile. I funzionari che lo hanno sostenuto possono diventare avversari, mentre la paura e il sospetto minano la fiducia.",
+      "Benito è arrivato vicino al potere personale. La sua prossima sfida sarà evitare che il sistema costruito attorno a lui diventi la causa della sua caduta."
+    ],
+    choices: [
+      { title: "Continuare la storia", desc: "Torna alla prova politica.", effects: "Mantieni le statistiche", next: "leadership" },
+      { title: "Ricominciamo", desc: "Prova un percorso completamente diverso.", effects: "Nuova partita", restart: true }
+    ]
+  }
+};
+
+function clamp(n, min = 0, max = 100) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function addLog(text) {
+  s.log.unshift(text);
+  s.log = s.log.slice(0, 8);
+}
+
+function toast(text) {
+  const el = document.getElementById("toast");
+  el.textContent = text;
+  el.classList.remove("hidden");
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => el.classList.add("hidden"), 2400);
+}
+
+function setBar(id, value, max = 100) {
+  document.getElementById(id).style.width =
+    (clamp(value, 0, max) / max * 100) + "%";
+}
+
+function render() {
+  const sc = scenes[s.scene];
+  if (!sc) return;
+
+  document.getElementById("chapter").textContent = sc.chapter;
+  document.getElementById("sceneTitle").textContent = sc.title;
+  document.getElementById("location").textContent = sc.location;
+  document.getElementById("artLabel").textContent = sc.art;
+  document.getElementById("story").innerHTML = sc.text
+    .map(p => "<p></p>").join("");
+
+  [...document.getElementById("story").children].forEach((p, i) => {
+    p.textContent = sc.text[i];
+  });
+
+  const quote = document.getElementById("quote");
+  if (sc.quote) {
+    quote.textContent = sc.quote;
+    quote.classList.remove("hidden");
+  } else {
+    quote.classList.add("hidden");
+  }
+
+  document.getElementById("hint").textContent =
+    sc.hint || "Scegli con attenzione: le conseguenze possono durare a lungo.";
+
+  document.getElementById("name").textContent = "Benito";
+  document.getElementById("role").textContent = roleName();
+  document.getElementById("portrait").textContent =
+    s.freedom ? "B." : "B.";
+
+  document.getElementById("healthN").textContent = s.health;
+  document.getElementById("witN").textContent = s.wit;
+  document.getElementById("repN").textContent = s.rep;
+  document.getElementById("susN").textContent = s.suspicion;
+  setBar("healthB", s.health);
+  setBar("witB", s.wit, 40);
+  setBar("repB", s.rep, 50);
+  setBar("susB", s.suspicion);
+
+  document.getElementById("money").textContent = s.money + " lire";
+  document.getElementById("info").textContent = s.info;
+  document.getElementById("allies").textContent = s.allies;
+  document.getElementById("influence").textContent = s.influence;
+
+  const inventory = document.getElementById("inventory");
+  inventory.replaceChildren();
+  if (!s.items.length) {
+    const div = document.createElement("div");
+    div.className = "inventory-item";
+    div.textContent = "Nessun oggetto speciale.";
+    inventory.append(div);
+  } else {
+    s.items.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "inventory-item";
+      div.textContent = "◆ " + item;
+      inventory.append(div);
+    });
+  }
+
+  const log = document.getElementById("log");
+  log.replaceChildren();
+  s.log.forEach(entry => {
+    const li = document.createElement("li");
+    li.textContent = entry;
+    log.append(li);
+  });
+
+  const choices = document.getElementById("choices");
+  choices.replaceChildren();
+  sc.choices.forEach((c, i) => {
+    const allowed = !c.require || c.require();
+    const btn = document.createElement("button");
+    btn.className = "choice";
+    btn.disabled = !allowed;
+
+    const strong = document.createElement("strong");
+    strong.textContent = (i + 1) + ". " + c.title;
+
+    const small = document.createElement("small");
+    small.textContent = allowed
+      ? c.desc + (c.effects ? "  ·  " + c.effects : "")
+      : c.locked || "Scelta non disponibile.";
+
+    btn.append(strong, small);
+    btn.addEventListener("click", () => choose(c));
+    choices.append(btn);
+  });
+}
+
+function roleName() {
+  if (!s.freedom) return "Prigioniero · Nessun titolo";
+  if (s.influence >= 12) return "Figura politica emergente";
+  if (s.flags.clerk) return "Impiegato amministrativo";
+  if (s.flags.politicalCareer) return "Organizzatore politico";
+  if (s.flags.journalism) return "Collaboratore di un giornale";
+  return "Uomo libero · In cerca di fortuna";
+}
+
+function choose(c) {
+  if (c.require && !c.require()) {
+    toast(c.locked || "Non puoi scegliere questa opzione.");
+    return;
+  }
+  if (c.restart) {
+    if (confirm("Vuoi davvero ricominciare da zero?")) {
+      s = fresh();
+      render();
+      save();
+    }
+    return;
+  }
+
+  if (c.apply) c.apply();
+  s.health = clamp(s.health, 0, 100);
+  s.wit = clamp(s.wit, 0, 40);
+  s.rep = clamp(s.rep, 0, 50);
+  s.suspicion = clamp(s.suspicion, 0, 100);
+  s.money = Math.max(0, s.money);
+  s.info = Math.max(0, s.info);
+  s.allies = Math.max(0, s.allies);
+  s.influence = Math.max(0, s.influence);
+
+  s.scene = c.next;
+  addLog(c.title);
+  render();
+  save();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function save() {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(s));
+    document.getElementById("saveStatus").textContent =
+      "Salvataggio aggiornato.";
+  } catch {
+    document.getElementById("saveStatus").textContent =
+      "Salvataggio non disponibile.";
+  }
+}
+
+function loadData(data) {
+  if (!data || typeof data !== "object" ||
+      !scenes[data.scene] ||
+      !["health", "wit", "rep", "suspicion", "money",
+        "info", "allies", "influence"].every(k =>
+        Number.isFinite(data[k]) && data[k] >= 0 && data[k] <= 1e7) ||
+      typeof data.flags !== "object" ||
+      !Array.isArray(data.items) ||
+      !Array.isArray(data.log)) {
+    toast("Il salvataggio non è valido.");
+    return;
+  }
+  s = data;
+  render();
+  save();
+  toast("Partita caricata.");
+}
+
+document.getElementById("saveBtn").addEventListener("click", () => {
+  save();
+  toast("Partita salvata.");
+});
+
+document.getElementById("loadBtn").addEventListener("click", () => {
+  document.getElementById("saveFile").click();
+});
+
+document.getElementById("saveFile").addEventListener("change", async e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  try {
+    loadData(JSON.parse(await file.text()));
+  } catch {
+    toast("Impossibile leggere il file.");
+  }
+  e.target.value = "";
+});
+
+document.getElementById("restartBtn").addEventListener("click", () => {
+  if (confirm("Vuoi cancellare la partita corrente e ricominciare?")) {
+    s = fresh();
+    render();
+    save();
+    toast("Una nuova storia comincia.");
+  }
+});
+
+try {
+  const saved = localStorage.getItem(KEY);
+  if (saved) {
+    const data = JSON.parse(saved);
+    if (data && scenes[data.scene]) s = data;
+  }
+} catch {}
+
+render();
+</script>
+</body>
+</html>
